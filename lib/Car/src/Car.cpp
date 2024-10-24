@@ -112,6 +112,41 @@ void Car::run_follow_line(int pwm) {
   delay(10);
 }
 
+
+
+bool Car::run_follow_line_with_prev_move(int pwm, bool is_prev_right) {
+  int pwmLeft = pwm, pwmRight = pwm;
+
+  if (line.is_state(0, 0)) {
+    if (is_prev_right) {
+      pwmLeft = pwm;
+      pwmRight = -1.5 * pwm;
+    } else{
+      pwmLeft = -1.5 * pwm;
+      pwmRight = pwm;
+    }
+  }
+  else if (line.is_state(1, 1)) {
+    // ok
+  }
+  else if (line.is_state(1, 0)) { // right > left
+    pwmLeft = -1.5 * pwm;
+    pwmRight = pwm;
+    is_prev_right = false;
+  }
+  else if (line.is_state(0, 1)) { // left > right
+    pwmLeft = pwm;
+    pwmRight = -1.5 * pwm;
+    is_prev_right = true;
+  }
+
+  run(pwmLeft, pwmRight);
+  delay(10);
+  stop();
+  delay(10);
+  return is_prev_right;
+}
+
 void Car::run_back_follow_line(int pwm) {
 
   // int angular_speed = 0;

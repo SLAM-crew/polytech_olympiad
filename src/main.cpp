@@ -12,6 +12,7 @@ void turn_right_not_prepare(int);
 
 int start_object_position = 0;
 int finish_object_position = 2;
+bool is_prev_right = true;
 
 int button_state = 0;
 
@@ -49,7 +50,7 @@ void setup() {
   */
 
   // test2();
-  calibrate_line_sensor();
+  // calibrate_line_sensor();
   // object_finder_test();
   // car.grabber.down();
   // delay(2000);
@@ -59,14 +60,7 @@ int button_prev = 0;
 void loop() {
   int button_curr = digitalRead(9);
   int speed = 200;
-  Serial.println(digitalRead(9));
-  if (button_curr != button_prev) {
-    if (button_state) button_state = 0;
-    else button_state = 1;
-    button_prev = button_curr;
-  }
-  if (button_state) car.stop();
-  else car.run_follow_line(speed); // 150
+  is_prev_right = car.run_follow_line_with_prev_move(speed, is_prev_right);
   // show_line_sensor_value();
   // calibrate_line_sensor();
   // run_until_intersec(speed);
