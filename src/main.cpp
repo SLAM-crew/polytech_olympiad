@@ -18,6 +18,7 @@ Buzzer buzzer;
 // SharpIR SharpIR(SharpIR::GP2Y0A21YK0F, A3);
 
 
+
 void setup() {
   // init car object
   car.leftMotor.set_pin(0, 6, 7);
@@ -26,7 +27,7 @@ void setup() {
   car.ultrasonic.init(9, 8); // trigPin = 9, echoPin = 8
   car.line.left.pin = A0;
   car.line.right.pin = A1;
-  car.line.setRangeValue(966, 77, 996, 102);
+  car.line.setRangeValue(932, 350, 882, 350);
   car.object_finder.set_pin(3);
   car.init();
   // Init buzzer
@@ -34,6 +35,8 @@ void setup() {
   buzzer.init();
   // init Serial
   Serial.begin(115200);
+  
+  int speed = 50;
 
   // Wait for the button
   while(analogRead(A3) < 50);
@@ -41,8 +44,9 @@ void setup() {
   /**
    * Begin the run
   */
-  test2();
-  // calibrate_line_sensor();
+
+  // test2();
+  calibrate_line_sensor();
   // object_finder_test();
   // car.grabber.down();
   // delay(2000);
@@ -50,7 +54,11 @@ void setup() {
 }
 
 void loop() {
+  int speed = 200;
+  car.run_follow_line(speed); // 150
   // show_line_sensor_value();
+  // calibrate_line_sensor();
+  // run_until_intersec(100);
   // delay(500);
   // distance_sensor_test();
   // Serial.println(analogRead(A3));

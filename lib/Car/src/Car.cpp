@@ -96,13 +96,13 @@ void Car::run_follow_line(int pwm) {
   }
   else if (line.is_state(1, 0)) { // right > left
     // angular_speed = 50; // angular > 0
-    pwmLeft = -pwm;
+    pwmLeft = -1.5* pwm;
     pwmRight = pwm;
   }
   else if (line.is_state(0, 1)) { // left > right
     // angular_speed = -50; // angular < 0
     pwmLeft = pwm;
-    pwmRight = -pwm;
+    pwmRight = -1.5 *pwm;
   }
 
 
