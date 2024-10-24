@@ -56,11 +56,18 @@ void setup() {
   // delay(2000);
   // car.grabber.up();
 }
-int button_prev = 0;
+bool stop_app = false;
 void loop() {
-  int button_curr = digitalRead(9);
-  int speed = 200;
-  is_prev_right = car.run_follow_line_with_prev_move(speed, is_prev_right);
+  if (digitalRead(9)) {
+    stop_app = true;
+  }
+  
+  if (!stop_app) {
+    int speed = 200;
+    // is_prev_right = car.run_follow_line_with_prev_move(speed, is_prev_right);
+    // Serial.println(is_prev_right);
+    car.run_follow_line(speed);
+  }
   // show_line_sensor_value();
   // calibrate_line_sensor();
   // run_until_intersec(speed);
