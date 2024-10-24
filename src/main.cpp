@@ -13,6 +13,8 @@ void turn_right_not_prepare(int);
 int start_object_position = 0;
 int finish_object_position = 2;
 
+int button_state = 0;
+
 Car car;
 Buzzer buzzer;
 // SharpIR SharpIR(SharpIR::GP2Y0A21YK0F, A3);
@@ -21,6 +23,7 @@ Buzzer buzzer;
 
 void setup() {
   // init car object
+  pinMode(9, INPUT); // button
   car.leftMotor.set_pin(0, 6, 7);
   car.rightMotor.set_pin(1, 5, 4);
   car.grabber.init(10, 11); // grabPin = 10, upPin = 11
@@ -52,13 +55,21 @@ void setup() {
   // delay(2000);
   // car.grabber.up();
 }
-
+int button_prev = 0;
 void loop() {
+  int button_curr = digitalRead(9);
   int speed = 200;
-  car.run_follow_line(speed); // 150
+  Serial.println(digitalRead(9));
+  if (button_curr != button_prev) {
+    if (button_state) button_state = 0;
+    else button_state = 1;
+    button_prev = button_curr;
+  }
+  if (button_state) car.stop();
+  else car.run_follow_line(speed); // 150
   // show_line_sensor_value();
   // calibrate_line_sensor();
-  // run_until_intersec(100);
+  // run_until_intersec(speed);
   // delay(500);
   // distance_sensor_test();
   // Serial.println(analogRead(A3));
