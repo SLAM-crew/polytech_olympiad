@@ -51,6 +51,7 @@ class Car {
     void up();
     
     void run_follow_line(int pwm);
+    bool run_follow_line_with_prev_move(int pwm, bool is_prev_right);
     void run_back_follow_line(int linear_speed);
 
     void rotate_left(int pwm);

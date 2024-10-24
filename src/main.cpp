@@ -12,6 +12,7 @@ void turn_right_not_prepare(int);
 
 int start_object_position = 0;
 int finish_object_position = 2;
+bool is_prev_right = true;
 
 Car car;
 Buzzer buzzer;
@@ -46,7 +47,7 @@ void setup() {
   */
 
   // test2();
-  calibrate_line_sensor();
+  // calibrate_line_sensor();
   // object_finder_test();
   // car.grabber.down();
   // delay(2000);
@@ -55,7 +56,7 @@ void setup() {
 
 void loop() {
   int speed = 200;
-  car.run_follow_line(speed); // 150
+  is_prev_right = car.run_follow_line_with_prev_move(speed, is_prev_right);
   // show_line_sensor_value();
   // calibrate_line_sensor();
   // run_until_intersec(100);
