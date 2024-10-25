@@ -14,8 +14,8 @@ int start_object_position = 0;
 int finish_object_position = 2;
 bool is_prev_right = true;
 
+int time = 0;
 int button_state = 0;
-
 Car car;
 Buzzer buzzer;
 SharpIR SharpIR(SharpIR::GP2Y0A21YK0F, A3);
@@ -57,23 +57,31 @@ void setup() {
   // car.grabber.down();
   // delay(2000);
   // car.grabber.up();
+  time = millis();
 }
 bool stop_app = false;
+int speed = 170;
 void loop() {
-  // calibrate_line_sensor();
-  if (digitalRead(9)) {
-    stop_app = true;
-  }
+  grabber_test();
+  // if (speed < 255) speed++;
+  // // Serial.println((String)(millis() - time));
+  // if ((millis() - time) > 44400) stop_app = true;
+  // // if (car.count >= 6) stop_app = true;
+  // // calibrate_line_sensor();
+  // if (digitalRead(9)) {
+  //   stop_app = true;
+  // }
 
-  if (!stop_app) {
-    int speed = 255;
-    // is_prev_right = car.run_follow_line_with_prev_move(speed, is_prev_right);
-    // Serial.println(is_prev_right);
-    car.run_follow_line(speed);
-  }
-  else {
-    car.stop();
-  }
+  // if (!stop_app) {
+  //   // int speed = 255;
+  //   // is_prev_right = car.run_follow_line_with_prev_move(speed, is_prev_right);
+  //   // Serial.println(is_prev_right);
+  //   car.run_follow_line(speed);
+  //   // run_until_intersec(speed);
+  // }
+  // else {
+  //   car.stop();
+  // }
   // show_line_sensor_value();
   // calibrate_line_sensor();
   // run_until_intersec(speed);

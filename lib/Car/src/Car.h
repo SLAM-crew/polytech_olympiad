@@ -13,6 +13,7 @@
 
 class Car {
   public:
+    int count = 0;
     Motor leftMotor, rightMotor;
     Coordinate coord; // coordinate of the robot
     Coordinate goal; // coordiante of the goal

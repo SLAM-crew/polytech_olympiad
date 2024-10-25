@@ -83,24 +83,32 @@ void Car::turn_right_for_interval(unsigned int time, int pwm)
 
 
 void Car::run_follow_line(int pwm) {
-  float k = 0.6;
+  float k = 0.6; // 0.5
   // int angular_speed = 0;
   int pwmLeft = pwm, pwmRight = pwm;
+  static int consecutiveCount = 0;
 
   if (line.is_state(0, 0)) {
+    consecutiveCount = 0;
     // angular_speed = 0;
 
   }
   else if (line.is_state(1, 1)) {
-    // angular_speed = 0;
+    // consecutiveCount++; // увеличиваем счетчик
+    // if (consecutiveCount >= 3) { // если 5 повторений подряд
+    //   pwmLeft = 0;
+    //   pwmRight = 0; // останавливаем машину
+    // }
   }
   else if (line.is_state(1, 0)) { // right > left
     // angular_speed = 50; // angular > 0
+    consecutiveCount = 0;
     pwmLeft = -k * pwm;
     pwmRight = pwm;
   }
   else if (line.is_state(0, 1)) { // left > right
     // angular_speed = -50; // angular < 0
+    consecutiveCount = 0;
     pwmLeft = pwm;
     pwmRight = -k *pwm;
   }
