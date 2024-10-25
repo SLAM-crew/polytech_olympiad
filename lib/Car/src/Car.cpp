@@ -83,7 +83,7 @@ void Car::turn_right_for_interval(unsigned int time, int pwm)
 
 
 void Car::run_follow_line(int pwm) {
-
+  float k = 0.6;
   // int angular_speed = 0;
   int pwmLeft = pwm, pwmRight = pwm;
 
@@ -96,20 +96,20 @@ void Car::run_follow_line(int pwm) {
   }
   else if (line.is_state(1, 0)) { // right > left
     // angular_speed = 50; // angular > 0
-    pwmLeft = -1.5* pwm;
+    pwmLeft = -k * pwm;
     pwmRight = pwm;
   }
   else if (line.is_state(0, 1)) { // left > right
     // angular_speed = -50; // angular < 0
     pwmLeft = pwm;
-    pwmRight = -1.5 *pwm;
+    pwmRight = -k *pwm;
   }
 
 
   run(pwmLeft, pwmRight);
-  delay(10);
-  stop();
-  delay(10);
+  delay(2);
+  // stop();
+  // delay(10);
 }
 
 

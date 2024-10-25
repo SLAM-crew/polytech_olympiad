@@ -18,9 +18,9 @@ int button_state = 0;
 
 Car car;
 Buzzer buzzer;
-// SharpIR SharpIR(SharpIR::GP2Y0A21YK0F, A3);
-
-
+SharpIR SharpIR(SharpIR::GP2Y0A21YK0F, A3);
+// Left (max, min): 914, 590
+// Right (max, min): 880, 434
 
 void setup() {
   // init car object
@@ -31,13 +31,15 @@ void setup() {
   car.ultrasonic.init(9, 8); // trigPin = 9, echoPin = 8
   car.line.left.pin = A0;
   car.line.right.pin = A1;
-  car.line.setRangeValue(932, 350, 882, 350);
+  // without black tape  car.line.setRangeValue(932, 350, 882, 350);
+  // with black tape
+  car.line.setRangeValue(914, 590, 880, 434);
   car.object_finder.set_pin(3);
   car.init();
   // Init buzzer
-  buzzer.pin = 2;
-  buzzer.init();
-  // init Serial
+  // buzzer.pin = 2;
+  // buzzer.init();
+  // init Serial~
   Serial.begin(115200);
   
   int speed = 50;
@@ -58,15 +60,19 @@ void setup() {
 }
 bool stop_app = false;
 void loop() {
+  // calibrate_line_sensor();
   if (digitalRead(9)) {
     stop_app = true;
   }
-  
+
   if (!stop_app) {
-    int speed = 200;
+    int speed = 255;
     // is_prev_right = car.run_follow_line_with_prev_move(speed, is_prev_right);
     // Serial.println(is_prev_right);
     car.run_follow_line(speed);
+  }
+  else {
+    car.stop();
   }
   // show_line_sensor_value();
   // calibrate_line_sensor();
@@ -83,9 +89,9 @@ void object_finder_test() {
 }
 
 void distance_sensor_test() {
-  Serial.println(car.ultrasonic.getDistance());
+  // Serial.println(car.ultrasonic.getDistance());
   delay(500);
-  // Serial.println(SharpIR.getDistance());
+  Serial.println(SharpIR.getDistance());
 }
 
 void grabber_test() {
